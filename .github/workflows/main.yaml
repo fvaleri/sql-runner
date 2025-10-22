@@ -27,7 +27,7 @@ jobs:
           cache: 'maven'
       - name: Run unit tests
         run: |
-          mvn test -V -B
+          mvn test -e -B
       - name: Run integration tests
         run: |
-          mvn test -V -B failsafe:integration-test
+          mvn test -e -B failsafe:integration-test
