@@ -30,7 +30,6 @@ public class StorageConfigTest {
         assertFalse(config.isAutoCommit());
     }
 
-
     @Test
     void shouldFailWithInvalidMaxStringParamLength() {
         Exception e1 = assertThrows(IllegalArgumentException.class, () -> new StorageConfig(0, 1, true));

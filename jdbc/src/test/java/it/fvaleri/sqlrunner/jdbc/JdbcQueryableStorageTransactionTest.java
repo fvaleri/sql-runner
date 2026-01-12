@@ -31,7 +31,7 @@ public class JdbcQueryableStorageTransactionTest {
     private Properties queries;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    void beforeEach() throws SQLException {
         mockConnection = mock(Connection.class);
         mockPreparedStatement = mock(PreparedStatement.class);
         when(mockConnection.prepareStatement(any())).thenReturn(mockPreparedStatement);
