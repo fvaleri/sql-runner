@@ -51,13 +51,13 @@ Create the JDBC storage and run your write and read queries:
 import it.fvaleri.sqlrunner.QueryableStorage;
 import it.fvaleri.sqlrunner.jdbc.JdbcQueryableStorage;
 
-// Create JDBC storage.
+// Create JDBC storage
 try (QueryableStorage storage = JdbcQueryableStorage.builder()
         .connectionFromUrl("jdbc:postgresql://localhost:5432/mydb", "username", "password")
         .queriesFromClasspath("users.properties")
         .build()) {
         
-    // Records write.
+    // Records write
     int affected = storage.write(
         "users.insert", 
         List.of("user0", "changeit", "user0@example.com")
@@ -67,7 +67,7 @@ try (QueryableStorage storage = JdbcQueryableStorage.builder()
         List.of("user1", "changeit", "user1@example.com")
     );   
     
-    // Single record read with automatic type inference.
+    // Single record read with automatic type inference
     Optional<User> user = storage.readSingle(
         "users.find.by.pk",
         List.of("user0")
@@ -77,7 +77,7 @@ try (QueryableStorage storage = JdbcQueryableStorage.builder()
          row.getValue(2, String.class)
      ));
     
-    // Stream-based processing with automatic type inference.
+    // Stream-based processing with automatic type inference
     List<User> users = storage.readAsStream("users.find.all")
         .map(row -> new User(
             row.getValue(0, String.class),
@@ -85,10 +85,10 @@ try (QueryableStorage storage = JdbcQueryableStorage.builder()
             row.getValue(2, String.class)
         )).toList();
     
-    // Single value read.
+    // Single value read
     long count = storage.readSingleValue("users.count", Long.class).orElse(0L);
     
-    // Column values read.
+    // Column values read
     List<String> emails = storage.readColumnValues("users.emails", String.class).toList();
 }
 ```
@@ -98,19 +98,19 @@ try (QueryableStorage storage = JdbcQueryableStorage.builder()
 Follow these instructions to build from source:
 
 ```bash
-# Clone repository.
+# Clone repository
 git clone git@github.com:fvaleri/sql-runner.git
 cd sql-runner
 
-# Build and test.
+# Build and test
 mvn install
 
-# Run integration tests.
+# Run integration tests
 mvn failsafe:integration-test
 
-# Run simple user management example.
+# Run simple user management example
 mvn -pl examples exec:java -Dexec.mainClass="it.fvaleri.sqlrunner.examples.UsersExample"
 
-# Run high-volume payments processing example.
+# Run high-volume payments processing example
 mvn -pl examples exec:java -Dexec.mainClass="it.fvaleri.sqlrunner.examples.PaymentsExample"
 ```
